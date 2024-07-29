@@ -1,0 +1,14 @@
+
+int readers = 0
+mutex = Semaphore (1)
+roomEmpty = Semaphore (1)
+
+Writer code:
+roomEmpty.wait()
+// Região Crítica
+roomEmpty.signal()
+
+Reader Code:
+read() // vai acessar a região crítica
+
+

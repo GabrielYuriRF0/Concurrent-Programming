@@ -1,0 +1,47 @@
+/*
+Torne as implementações de add e find threads safes.
+*/
+
+public class LList{
+    private Node head;
+    private Semaphore mutex = new Semaphore(1);
+
+    public void add(int data){
+        Node newNode = new Node(data);
+        mutex.wait();
+        if(head == null){
+            head = newNode;
+        }
+        Node current = head;
+        while(current.next !== null){
+            current = current.next
+        }
+        current.next = newNode;
+        mutex.signal();
+    }
+
+    public boolean find(int toFind){
+        mutex.wait();
+        Node current = head;
+        while(current.next != null){
+            if(current.value == toFind){
+                return true;
+            }
+            current = current.next
+        }
+        return false;
+
+    }
+    mutex.signal();
+}
+
+public class Node {
+    int data;
+    Node next;
+
+    public Node(int data){
+        this.data = data;
+        this.next = null;
+    }
+
+}

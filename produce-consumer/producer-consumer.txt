@@ -1,0 +1,48 @@
+/*
+Faça a implementação abaixo ser thread safe para as operações de produce e consume
+*/
+
+int buffer[Max];
+int fill = 0;
+int use = 0;
+Semaphore itsFull = new Semaphore(Max);
+Semaphore itsEmpty = new Semaphore(0);
+Semaphore mutex = new Semaphore(1);
+
+void put (int value){
+    itsFull.wait();
+    mutex.wait();
+    buffer[fill] = value;
+    fill = (fill + 1) % MAX;
+    mutex.signal();
+    itsEmpty.signal();
+}
+
+int get(){
+    itsEmpty.wait();
+    mutex.wait();
+    int tmp = buffer[use];
+    use = (use + 1) % MAX;
+    mutex.signal();
+    itsFull.signal();
+    return tmp;
+}
+
+void * produce(void * args){
+    int i;
+    int items_to_produce = (int) args;
+    for (i = 0; i< items_to_produce; i++){
+        put(i);
+    }
+    return NULL;
+}
+
+void * consume(void * args){
+    int i;
+    items_to_consume = (int) args;
+    for(i = 0; i < items_to_consume; i++){
+        int tmp = get();
+    }
+    return NULL;
+}
+
