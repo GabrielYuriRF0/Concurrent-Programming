@@ -1,0 +1,26 @@
+main(){
+    roomEmpty = Semaphore(1);
+    mutex = Semaphore(1);
+    readers = 0;
+}
+
+func void  wrap_write(data d){
+    roomEmpty.wait();
+    write(d);
+    roomEmpty.signal();
+}
+
+func data wrap_read(){
+    mutex.wait(); // Na prova ta escrito mutex1.wait(), mas foi um erro de escrita.
+    readers++;
+    if(readers == 1){ //Na prova tem só 1 =,  mas foi erro de escrita
+        roomEmpty.wait();
+    }
+    mutex.signal()
+    item = read();
+    mutex.wait();
+    readers--;
+    mutex.signal();
+    roomEmpty.signal();
+    return item;
+}

@@ -1,0 +1,41 @@
+class BufferedQueue{
+    int capacity;
+    private final Queue<T> queue;
+    private mutex Semaphore;
+    private isFull Semaphore;
+    int itens;
+    private hasItens Semaphore;
+
+    new BufferedQueue(int capacity){
+        this.capacity = capacity;
+        this.queue = New LinkedList<>();
+        this.mutex = new Semaphore(1);
+        this.itens = 0;
+        this.isFull = new Semaphore(0);
+        this.hasItens = new Semaphore(0);
+    }
+
+    T dequeue(){
+        this.mutex.wait();
+        if(itens == 0){
+            hasItens.wait();
+        }
+        itens--;
+        T item = queue.poll();
+        this.mutex.signal();
+        isFull.signal();
+        return item;
+    }
+
+    void enqueue(T item){
+        this.mutex.wait()
+        itens++;
+        if(itens == capacity){
+            isFull.wait()
+        }
+        itens++; // Eu sei que isso não deveria estar aqui....
+        queue.add(item);
+        this.mutex.signal();
+        hasItens.signal();
+    }
+}

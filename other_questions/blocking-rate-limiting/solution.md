@@ -12,6 +12,7 @@ func handle(Request req) {
             semaphore1.wait()
         }
         exec()
+        semaphore0.signal()
         mutex0.wait()
         counter0--
         mutex0.signal()
