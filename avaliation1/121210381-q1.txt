@@ -1,9 +1,0 @@
-//OBS: Não terminei ela  por falta de tempo
-externalCount = 0;
-internalCount = 0;
-mutex1 = Semaphore(1);
-
-func void externalCount(Request req){
-    mutex.wait();
-    externalCount++;
-}
